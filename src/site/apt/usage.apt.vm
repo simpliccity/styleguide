@@ -1,0 +1,148 @@
+ ------
+ Usage
+ ------
+ Kevin Fox
+ ------
+ 2014-02-07
+ ------
+
+ ~~    Copyright 2013 Information Control Corporation
+ ~~
+ ~~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~~ you may not use this file except in compliance with the License.
+ ~~ You may obtain a copy of the License at
+ ~~
+ ~~     http://www.apache.org/licenses/LICENSE-2.0
+ ~~
+ ~~ Unless required by applicable law or agreed to in writing, software
+ ~~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~~ See the License for the specific language governing permissions and
+ ~~ limitations under the License.
+
+ ~~ NOTE: For help with the syntax of this file, see:
+ ~~ http://maven.apache.org/doxia/references/apt-format.html
+
+Usage
+
+  The StyleGuide plugin produces a style guide which illustrates valid solutions for common
+  coding problems within the context of the project.
+  
+%{toc|section=1|fromDepth=2|toDepth=3}
+
+* Organization of the style guide
+ 
+  The style guide is a Maven report generated as part of the project site.  The report is
+  divided into <<categories>>, each of which contains a set of related <<topics>>.  Topics
+  describe how to implement specific functionality within the project and include one or
+  more code samples to illustrate this.
+  
+  The entire content of the style guide, including categories, topics and code samples, can
+  be dynamically defined in the project's code, as described below.  The StyleGuide plugin
+  also supports the use of a template to statically control the structure of the report
+  while still drawing code samples directly from the codebase.  Refer to the
+  {{{./examples/report-formatting.html}Controlling report appearance}} example for information
+  on how to generate and use a StyleGuide template.
+  
+* Marking code samples for inclusion in the style guide
+ 
+  The StyleGuide plugin provides a set of Java annotations that can be used to mark code
+  samples for inclusion in the style guide.  
+  The {{{./docs/apidocs/org/simpliccity/styleguide/annotation/CodeStyle.html}@CodeStyle}}
+  annotation is used to mark a single sample in a class or method, while
+  {{{./docs/apidocs/org/simpliccity/styleguide/annotation/CodeStyles.html}@CodeStyles}}
+  aggregates multiple <<<@CodeStyle>>> annotations.
+  
+  The <<<@CodeStyle>>> annotation allows the developer to control how a code sample is used
+  in the style guide report.  The two required elements, <<<categoryId>>> and <<<topicId>>>,
+  define the category and topic (see above) to which the sample belongs.  If desired, the 
+  descriptive name of the category and topic can also be specified using the <<<categoryName>>>
+  and <<<topicName>>> elements, although it is generally better to specify these using a
+  StyleGuide template.  (<Note> that the appearance of a category/topic combination in a 
+  <<<@CodeStyle>>> annotation causes that category and topic to appear in the style guide 
+  regardless of whether they are defined in the StyleGuide template, if any.)  The 
+  <<<citations>>> element can be used to include additional text, such as related code snippets,
+  configuration files or HTML fragments, along with the code sample.
+  
+  The actual lines of code associated with a code sample defined by <<<@CodeStyle>>> are
+  delimited by a comment marker.  The specified comment must appear immediately before
+  and after the desired lines of code.  The {{{http://www.arrenbrecht.ch/jcite/index.htm}JCite}}
+  code citation tool is used to extract the corresponding code snippet and embed it in the
+  style guide report.  
+  
+  Unless otherwise specified, the comment marker must use the following format:
+  
++---
+// --- StyleGuide <category>.<topic> ---
++---
+
+  where \<category\> and \<topic\> denote the ID's of the category and topic, respectively,
+  to which the sample belongs.  
+  
+  For example, the following code could be used to define a code sample illustrating the
+  project's standard way to initialize a Log4J logger:
+  
++---
+@CodeStyle(categoryId="logging", topicId="init")
+public class SampleClass
+{
+    // --- StyleGuide logging.init ---
+    private Logger logger = Logger.getLogger(getClass());
+    // --- StyleGuide logging.init ---
++---          
+  
+  The comment marker used for a specific code sample can be changed using the <<<marker>>>
+  element of the <<<@CodeStyle>>> annotation.  While not generally necessary, this could be
+  useful to allow multiple <<<@CodeStyle>>> annotations to reference the same code snippet
+  or to provide more control over the behavior of JCite in processing the code snippet (e.g.
+  by configuring a comment marker for 
+  {{{http://www.arrenbrecht.ch/jcite/java.htm#pagetoc__3}code highlighting}}).
+  
+  The following dependency is required to use the StyleGuide annotations:
+  
++---
+<dependency>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>styleguide-core</artifactId>
+    <version>${project.version}</version>
+    <scope>provided</scope>
+</dependency>
++---
+  
+* Generating the style guide
+
+  The most common way to generate the style guide is to include the
+  {{{./modules/styleguide-maven-plugin/aggregate-mojo.html}aggregate}} report in the
+  top-level project, as this will consolidate code samples from all modules into a single
+  report.  The following basic configuration will add the StyleGuide <<aggregate>> report to
+  the Maven site.
+  
++---
+<reporting>
+    ...
+    <plugins>
+        ...
+        <plugin>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>styleguide-maven-plugin</artifactId>
+            <version>${project.version}</version>
+            <reportSets>
+                <reportSet>
+                    <id>styleguide</id>
+                    <reports>
+                        <report>aggregate</report>
+                    </reports>
+                </reportSet> 
+            </reportSets>
+        </plugin>
+        ...
+    </plugins>
+    ...
+</reporting>
++---
+
+  See the {{{./examples/jcite-config.html}Configuring JCite}} example for information on
+  prerequisites required to setup the JCite tool used by the StyleGuide plugin and the
+  {{{./examples/multimodule-project.html}Generating a style guide report for a multimodule project}}
+  example for additional considerations when using the <<aggregate>> report.
+  

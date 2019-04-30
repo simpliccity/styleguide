@@ -1,0 +1,119 @@
+ ------
+ Introduction
+ ------
+ Kevin Fox
+ ------
+ 2013-02-14
+ ------
+
+ ~~    Copyright 2013 Information Control Corporation
+ ~~
+ ~~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~~ you may not use this file except in compliance with the License.
+ ~~ You may obtain a copy of the License at
+ ~~
+ ~~     http://www.apache.org/licenses/LICENSE-2.0
+ ~~
+ ~~ Unless required by applicable law or agreed to in writing, software
+ ~~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~~ See the License for the specific language governing permissions and
+ ~~ limitations under the License.
+
+ ~~ NOTE: For help with the syntax of this file, see:
+ ~~ http://maven.apache.org/doxia/references/apt-format.html
+
+Simpliccity StyleGuide Plugin
+
+  This plugin dynamically generates a style guide for a development project from annotated
+  source code.  See the project's {{{./docs/styleGuide.html}style guide}} for an example
+  of the output produced by this plugin.
+
+%{toc|section=1|fromDepth=2|toDepth=3}
+  
+* Why a style guide?
+  
+  Many professional disciplines use a style guide to communicate the standards that define
+  an expected quality of output from a group of collaborators.  The style guide covers a 
+  broad range of commonly-encountered situations, with specific examples of how to address 
+  each.  Being both comprehensive and practical, the style guide helps to ensure consistency
+  across the work of all participants.
+  
+  Software development teams can benefit from a similar approach to documenting standard
+  solutions to common problems.  By gathering examples of high-quality code in a single
+  artifact, the team can facilitate training, promote knowledge transfer, simplify code 
+  reviews and encourage an overall focus on quality.  The style guide becomes one more tool
+  in the toolbox for a mature development team.
+  
+* Why a style guide plugin?
+
+  As helpful as a style guide can be for a development team, it will only be used if it is:
+  
+  * Up to date
+  
+  * Simple to maintain
+  
+  * Easily accessible
+  
+  []
+  
+  The most effective place to get examples of high-quality code for the style guide is from
+  the code itself.  The StyleGuide plugin relies on Java annotations and comment markers to
+  define style guide samples directly in the code.  It then dynamically extracts the marked
+  code snippets into a Maven project report, updating the style guide with each build.  By
+  making it easy both to create and access the style guide, the plugin ensures that the team
+  gets maximum benefit from its investment in identifying a comprehensive set of representative
+  code solutions.
+
+* Goals Overview
+
+  * {{{./modules/styleguide-maven-plugin/styleguide-mojo.html}styleguide:styleguide}}
+  generate the StyleGuide report for a single project
+  
+  * {{{./modules/styleguide-maven-plugin/aggregate-mojo.html}styleguide:aggregate}}
+  generate the StyleGuide report for a multi-module project
+  
+  * {{{./modules/styleguide-maven-plugin/collate-mojo.html}styleguide:collate}}
+  generate style guide content for reporting in another context using the 
+  <<<report>>> goal
+
+  * {{{./modules/styleguide-maven-plugin/report-mojo.html}styleguide:report}}
+  output the results from the <<<collate>>> goal to a Maven report
+
+  * {{{./modules/styleguide-maven-plugin/generate-template-mojo.html}styleguide:generate-template}}
+  generate a template for use in producing a StyleGuide report
+
+  * {{{./modules/styleguide-maven-plugin/jcite-mojo.html}styleguide:jcite}}
+  incorporate code snippets into site pages using the JCite tool employed for the StyleGuide report
+
+  []
+
+* Usage
+
+  General instructions on how to use the StyleGuide Plugin can be found on the {{{./usage.html}usage page}}.
+  Some more specific use cases are described in the examples given below.  Common questions regarding
+  the use of the plugin are answered in the {{{./faq.html}FAQ}}.
+
+* JCite tool
+
+  The plugin uses JCite, the open-source Java Source Code Citation System, to extract code
+  snippets from the project codebase.  You will need to install JCite on the system running
+  the Maven build.  Visit the {{{http://www.arrenbrecht.ch/jcite/index.htm}JCite web site}}
+  to download the application and find detailed usage instructions. 
+
+* Examples
+
+  To provide you with a better understanding of some usages of the StyleGuide Plugin,
+  you can take a look at the following examples:
+
+  * {{{./examples/jcite-config.html}Configuring JCite}}
+
+  * {{{./examples/single-project.html}Generating a style guide report for a single project}}
+
+  * {{{./examples/multimodule-project.html}Generating a style guide report for a multimodule project}}
+
+  * {{{./examples/jcite-processing.html}Including code snippets in site content}}
+
+  * {{{./examples/report-formatting.html}Controlling report appearance}}
+
+  []

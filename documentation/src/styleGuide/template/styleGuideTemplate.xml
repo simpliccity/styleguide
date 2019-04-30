@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+    Copyright 2013 Information Control Corporation
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+-->
+<styleguide xmlns="http://www.simpliccity.org/schema/styleguide" name="Simpliccity StyleGuide Plugin" id="StyleGuide">
+	<citations>
+		<citation ref="overview.html" type="HTML" placement="TOP" />
+	</citations>
+    <categories>
+        <category name="Simpliccity.org standards" id="simpliccity">
+        	<citations>
+        		<citation ref="simpliccity/overview.html" type="HTML" placement="TOP" />
+        	</citations>
+            <topics>
+                <topic name="Standard license header for Java files" id="license">
+		        	<citations>
+		        		<citation ref="simpliccity/license.html" type="HTML" placement="TOP" />
+		        	</citations>
+                </topic>
+            </topics>
+        </category>
+        <category name="StyleGuide conventions" id="styleGuide">
+        	<citations>
+        		<citation ref="styleguide/overview.html" type="HTML" placement="TOP" />
+        	</citations>
+            <topics>
+                <topic name="Marking a code snippet as a style" id="marker">
+		        	<citations>
+		        		<citation ref="styleguide/marker.html" type="HTML" placement="TOP" />
+		        	</citations>
+                </topic>
+                <topic name="Defining multiple code styles in a single class" id="multiple">
+		        	<citations>
+		        		<citation ref="styleguide/multiple.html" type="HTML" placement="TOP" />
+		        	</citations>
+                </topic>
+            </topics>
+        </category>
+        <category name="Working with Plexus components" id="plexus">
+        	<citations>
+        		<citation ref="plexus/overview.html" type="HTML" placement="TOP" />
+        	</citations>
+            <topics>
+                <topic name="Defining a component" id="defineComponent">
+		        	<citations>
+		        		<citation ref="plexus/define.html" type="HTML" placement="TOP" />
+		        	</citations>
+                </topic>
+                <topic name="Using a component in Plexus" id="useComponent">
+		        	<citations>
+		        		<citation ref="plexus/use.html" type="HTML" placement="TOP" />
+		        	</citations>
+                </topic>
+            </topics>
+        </category>
+        <category name="Creating a Maven plugin" id="plugin">
+        	<citations>
+        		<citation ref="maven/overview.html" type="HTML" placement="TOP" />
+        	</citations>
+            <topics>
+                <topic name="Injecting a Plexus component" id="usePlexus">
+		        	<citations>
+		        		<citation ref="maven/plexus.html" type="HTML" placement="TOP" />
+		        	</citations>
+                </topic>
+            </topics>
+        </category>
+        <category name="Working with JAXB" id="JAXB">
+        	<citations>
+        		<citation ref="jaxb/overview.html" type="HTML" placement="TOP" />
+        	</citations>
+            <topics>
+                <topic name="Defining a root element" id="rootElement"/>
+                <topic name="Defining a type" id="type"/>
+                <topic name="Defining a type with no elements" id="typeNoElements"/>
+                <topic name="Defining an attribute" id="attribute"/>
+                <topic name="Marshalling XML from JAXB objects" id="marshal"/>
+                <topic name="Unmarshalling JAXB objects from XML" id="unmarshal"/>
+                <topic name="Applying an XSL transformation to JAXB objects" id="transform"/>
+            </topics>
+        </category>
+        <category name="Annotation processing" id="annotation">
+        	<citations>
+        		<citation ref="annotation/overview.html" type="HTML" placement="TOP" />
+        	</citations>
+            <topics>
+                <topic name="Defining an annotation processor" id="processor">
+		        	<citations>
+		        		<citation ref="annotation/define.html" type="HTML" placement="TOP" />
+		        	</citations>
+                </topic>
+            </topics>
+        </category>
+    </categories>
+</styleguide>

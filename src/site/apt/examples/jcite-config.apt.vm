@@ -1,0 +1,102 @@
+ ------
+ Configuring JCite
+ ------
+ Kevin Fox
+ ------
+ 2013-02-19
+ ------
+
+ ~~    Copyright 2013 Information Control Corporation
+ ~~
+ ~~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~~ you may not use this file except in compliance with the License.
+ ~~ You may obtain a copy of the License at
+ ~~
+ ~~     http://www.apache.org/licenses/LICENSE-2.0
+ ~~
+ ~~ Unless required by applicable law or agreed to in writing, software
+ ~~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~~ See the License for the specific language governing permissions and
+ ~~ limitations under the License.
+
+ ~~ NOTE: For help with the syntax of this file, see:
+ ~~ http://maven.apache.org/doxia/references/apt-format.html
+
+Configuring JCite
+
+  The StyleGuide plugin uses JCite, the open-source Java Source Code Citation System, to 
+  extract code snippets from the project codebase.  You will need to install JCite on the 
+  system running the Maven build.  Visit the {{{http://www.arrenbrecht.ch/jcite/index.htm}JCite web site}}
+  to download the application and find detailed usage instructions.
+
+%{toc|section=1|fromDepth=2|toDepth=3}
+  
+* Setting the path to the JCite executable
+
+  Since JCite has not yet been released as a Maven artifact, the StyleGuide plugin must 
+  know the full path to the JCite executable appropriate for the system on which the Maven
+  build is running.  This can be configured individually for each StyleGuide goal through
+  the <<<jciteCommandPath>>> plugin property or globally using the <<<jciteCommandPath>>>
+  system property.
+
+  To configure the location of the JCite executable using the plugin property, include the
+  following in the StyleGuide \<<<<plugin>>>\> entry:
+  
++---
+<configuration>
+    ...
+    <jciteCommandPath>[full path to JCite executable]</jciteCommandPath>
+    ...
+</configuration>
++---
+
+  To configure the path using a system property, add the following to the Maven command line:
+  
++---
+-DjciteCommandPath=[full path to JCite executable]
++---
+
+  Alternatively, the command path can be set as a build-level or global property by
+  adding the following to a POM or to <<<settings.xml>>>.
+  
++---
+<properties>
+	...
+    <jciteCommandPath>[full path to JCite executable]</jciteCommandPath>
+    ...
+</properties>
++---	 
+  
+  \[<<Note>> that, while the StyleGuide plugin places no restrictions on the installation 
+  location of JCite, the <<<jcite.bat>>> batch file included in the current JCite release
+  for use on Windows systems will not run correctly if installed in a location with a space
+  in the full path name (e.g. C:\\Program Files\\jcite).\]
+  
+* Avoiding build failure when the JCite executable is unavailable
+
+  When using the StyleGuide plugin, if your build can potentially be run on a system that 
+  does not have the JCite executable installed, you can prevent it from failing by 
+  including all of the build and report configurations that are dependent on JCite in a 
+  profile that is only activated when the <<<jciteCommandPath>>> property is set correctly.
+  
++---
+<profiles>
+    ...
+    <profile>
+        <id>jcite-processing</id>
+        <activation>
+            <file>
+                <exists>${jciteCommandPath}</exists>
+            </file>
+        </activation>
+        ...
+    </profile>
+    ...
+</profiles>
++---
+
+  Bear in mind that, although the build will not fail if JCite is not available, the
+  plugins and reports included in this profile will not be executed.  This may result
+  in missing or unexpected content in the Maven site.
+  

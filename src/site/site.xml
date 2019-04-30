@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+
+    Copyright 2013 Information Control Corporation
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+-->
+<project xmlns="http://maven.apache.org/DECORATION/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/DECORATION/1.0.0 http://maven.apache.org/xsd/decoration-1.0.0.xsd"
+  name="Simpliccity StyleGuide plugin">
+  
+    <publishDate position="right" />
+    <version position="right" />
+    <bannerLeft>
+        <name>${displayTitle}</name>
+    </bannerLeft>
+    
+	<body>
+
+        <breadcrumbs>
+		  <item name="Simpliccity.org" href="http://www.simpliccity.org"/>
+		  <item name="StyleGuide Plugin" href="index.html"/>        
+        </breadcrumbs>
+        		
+		<menu name="Overview" inherit="top">
+		  <item name="Introduction" href="index.html"/>
+		  <item name="Goals" href="./modules/styleguide-maven-plugin/plugin-info.html" />
+		  <item name="Usage" href="usage.html"/>
+		  <item name="FAQ" href="faq.html"/>
+		</menu>
+	 
+	 	<menu name="Examples" inherit="top">
+	 		<item name="Configuring JCite" href="./examples/jcite-config.html" />
+	 		<item name="Generating a style guide report for a single project" href="./examples/single-project.html" />
+	 		<item name="Generating a style guide report for a multimodule project" href="./examples/multimodule-project.html" />
+	 		<item name="Including code snippets in site content" href="./examples/jcite-processing.html" />
+	 		<item name="Controlling report appearance" href="./examples/report-formatting.html" />
+	 	</menu>
+	 	
+		<menu name="Development" inherit="top">
+			<item name="API Reference" href="./docs/apidocs/index.html" />
+			<item name="Style Guide" href="./docs/styleGuide.html" />
+			<item name="Sonar Dashboard" href="sonar.html" />
+		</menu>
+		
+		<menu name="Modules" inherit="top">
+			<item name="styleguide-core" href="./modules/styleguide-core/project-info.html" />
+			<item name="styleguide-maven-util" href="./modules/styleguide-maven-util/project-info.html" />
+			<item name="styleguide-maven-plugin" href="./modules/styleguide-maven-plugin/project-info.html" />			
+		</menu>
+	</body>
+</project>

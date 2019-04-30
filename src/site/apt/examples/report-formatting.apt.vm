@@ -1,0 +1,146 @@
+ ------
+ Controlling report appearance
+ ------
+ Kevin Fox
+ ------
+ 2013-02-19
+ ------
+
+ ~~    Copyright 2013 Information Control Corporation
+ ~~
+ ~~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~~ you may not use this file except in compliance with the License.
+ ~~ You may obtain a copy of the License at
+ ~~
+ ~~     http://www.apache.org/licenses/LICENSE-2.0
+ ~~
+ ~~ Unless required by applicable law or agreed to in writing, software
+ ~~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~~ See the License for the specific language governing permissions and
+ ~~ limitations under the License.
+
+ ~~ NOTE: For help with the syntax of this file, see:
+ ~~ http://maven.apache.org/doxia/references/apt-format.html
+
+Controlling report appearance
+
+  The StyleGuide plugin provides a variety of ways to control the formatting of the style
+  guide report.
+
+%{toc|section=1|fromDepth=2|toDepth=3}
+
+* Maven site skin
+
+  As with all Maven reports, the overall appearance of the style guide report can be 
+  controlled by configuring a {{{http://maven.apache.org/plugins/maven-site-plugin/examples/creatingskins.html}skin}}
+  for the Maven site.
+  
+* Enabling syntax highlighting
+
+  The code snippets extracted by JCite use a set of CSS styles to provide syntax highlighting
+  (see the JCite web site for further information on the 
+  {{{http://www.arrenbrecht.ch/jcite/styling.htm}styles}} used).  Copy the appropriate
+  JCite CSS to the 
+  {{{http://maven.apache.org/plugins/maven-site-plugin/examples/creating-content.html#Adding_Extra_Resources}site resources}}
+  as <<<site.css>>> to enable syntax highlighting in the style guide and any other site
+  content with code snippets.
+  
+* Using a style guide template
+
+  The StyleGuide plugin stores the output of processing <<<@CodeStyle>>> annotations in the
+  codebase to an XML file using the {{{./schema-listing.html}StyleGuide schema}}.  This file
+  is processed further to produce the HTML output of the style guide report.  The plugin
+  can also use the information from a template file following the 
+  {{{./schema-listing.html}same schema}} to control the structure of the final report.
+  
+  In particular, the template can be used to assign descriptive titles to style guide 
+  categories and topics in a consistent fashion and to control the order in which they will
+  occur within the report.  The template also provides the ability to associate HTML 
+  fragments with the overall style guide and with individual categories and topics.  The
+  contents of these fragments will be displayed with the appropriate document section.
+  
+  Following is the listing of the StyleGuide template for the StyleGuide Plugin project.
+  
++---
+\[text:styleGuideTemplate.xml\]
++---
+  
+  Note that only the configurations for the style guide, category and topic elements in the
+  template will be used.  The exemplar elements are always derived dynamically by processing
+  the <<<@CodeStyle>>> annotations in the codebase.
+  
+** Using the {{{../modules/styleguide-maven-plugin/generate-template-mojo.html}generate-template}} goal to create a template
+
+  The StyleGuide plugin provides a goal to create a template file based on the <<<@CodeStyle>>>
+  annotations contained in the codebase.  The XML file produced by running the 
+  {{{../modules/styleguide-maven-plugin/generate-template-mojo.html}generate-template}}
+  goal (<$\{project.build.directory\}/styleGuide/styleGuideTemplate.xml> by default) can 
+  then be copied to the template location expected by the StyleGuide reports
+  ($\{basedir\}/src/styleGuide/template/styleGuideTemplate.xml by default) and modified
+  as needed.
+  
+  This goal can also be used to update the template as the codebase evolves.  On each
+  subsequent invocation, the results from the scan for <<<@CodeStyle>>> annotations
+  will be merged with the existing template file.  The configurations from the template
+  will be preserved, assuming the corresponding category or topic still exists in the
+  annotations, and any new categories or topics found in the annotations will be added
+  to the updated template.
+  
+  The {{{../modules/styleguide-maven-plugin/generate-template-mojo.html}generate-template}}
+  goal can be called directly as follows.
+  
++---
+mvn styleguide:generate-template
++---
+
+  Alternately, the goal can be incorporated into the POM as follows.
+  
++---
+<plugin>
+    <groupId>${project.groupId}</groupId>
+    <artifactId>styleguide-maven-plugin</artifactId>
+    <executions>
+        <execution>
+            <id>generate-template</id>
+            <phase>generate-resources</phase>
+            <goals>
+                <goal>generate-template</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>						
++---
+
+  (<Note> that the output from this goal is not directly included in any build artifact, so
+  the choice of the build lifecycle phase to which to bind it is arbitrary.)
+  
+* Using an alternate XSL stylesheet
+
+  The content of the style guide report is generated by applying an XSL transformation to the
+  XML file described above.  The appearance of the report can be modified by using an
+  alternate XSL stylesheet.
+  
+** Specifying an alternate XSL stylesheet
+
+  The XSL stylesheet used for the StyleGuide reports is loaded as a Java resource from the
+  effective classpath.  The name of the XSL stylesheet resource to use can be configured
+  using the {{{../modules/styleguide-maven-plugin/styleguide-mojo.html#xslTransformResource}xslTransformResource}}
+  parameter.  Bear in mind that the artifact containing the desired resource must be defined
+  as a dependency for the project generating the StyleGuide report.
+  
+** Available XSL stylesheets
+
+  The StyleGuide plugin includes several stylesheets that can be used to format the style
+  guide report.  These can also serve as examples on which to base a new stylesheet.
+  
+  * {{{./styleGuideBasic-listing.html}/styleGuideBasic.xsl}}
+  
+  Default format.
+
+  * {{{./styleGuideNoTOC-listing.html}/styleGuideNoTOC.xsl}}
+  
+  Alternate format without a table of contents.
+  
+  []
+  

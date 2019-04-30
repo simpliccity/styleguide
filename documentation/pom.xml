@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 Information Control Corporation
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>styleguide</artifactId>
+		<groupId>org.simpliccity.styleguide</groupId>
+		<version>1.1.6-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>documentation</artifactId>
+	<packaging>pom</packaging>
+	<name>StyleGuide Documentation</name>
+	<description>${displayTitle} project documentation</description>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>styleguide-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>styleguide-maven-util</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>styleguide-maven-plugin</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+    	<dependency>
+	      	<groupId>org.simpliccity</groupId>
+	      	<artifactId>simpliccity-license</artifactId>
+	      	<version>${simpliccity.licenseVersion}</version>
+	      	<classifier>sources</classifier>
+	      	<type>jar</type>
+    	</dependency>
+    			
+	</dependencies>
+	
+	<build>
+	
+		<finalName>styleguide-documentation-${project.version}</finalName>
+		
+		<plugins>
+		
+			<!-- Generate site documentation for this project -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-site</id>
+						<goals>
+							<goal>site</goal>
+						</goals>
+						<configuration>
+							<generateReports>false</generateReports>
+							<generatedSiteDirectory>${moduleDocDirectory}</generatedSiteDirectory>
+							<outputDirectory>${docStagingDirectory}/docs</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>stage</id>
+						<phase>post-site</phase>
+						<goals>
+							<goal>stage</goal>
+						</goals>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution> 
+					<execution>
+						<id>default-deploy</id>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+						<configuration>
+							<inputDirectory>${docStagingDirectory}</inputDirectory>
+							<skipDeploy>false</skipDeploy>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Retrieve Simpliccity license files -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-remote-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>process</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<outputDirectory>${project.build.directory}/license</outputDirectory>
+					<includeProjectProperties>true</includeProjectProperties>
+					<resourceBundles>
+						<resourceBundle>
+							org.simpliccity:simpliccity-license:${simpliccity.licenseVersion}
+						</resourceBundle>
+					</resourceBundles>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>site</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<reportOutputDirectory>${docStagingDirectory}/docs/apidocs</reportOutputDirectory>
+					<additionalparam>-Xdoclint:none</additionalparam>
+	  				<doctitle>${displayTitle} API v${project.version}</doctitle>
+	  				<header>&lt;b&gt;${displayTitle}&lt;/b&gt;</header>
+					<includeDependencySources>true</includeDependencySources>
+					<dependencySourceIncludes>
+						<dependencySourceInclude>org.simpliccity.styleguide:*</dependencySourceInclude>
+					</dependencySourceIncludes>
+					<links>
+						<!-- The plugin link must precede the core link to avoid issues with external links for plugin package. -->
+						<link>${mavenPluginJavadocUrl}</link>
+						<link>${mavenCoreJavadocUrl}</link>
+						<link>${mavenPluginAnnotationJavadocUrl}</link>
+						<link>${mavenReportingApiJavadocUrl}</link>
+						<link>${mavenReportingImplJavadocUrl}</link>
+					</links>
+					<sourceFileExcludes>
+						<sourceFileExclude>**\/HelpMojo.java</sourceFileExclude>
+					</sourceFileExcludes>
+				</configuration>
+			</plugin>
+			
+			<!-- Create documentation bundle for entire project -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+	  			<executions>
+	  				<execution>
+	  					<id>doc-assembly</id>
+						<phase>post-site</phase>
+	  					<goals>
+	  						<goal>single</goal>
+	  					</goals>
+	  					<configuration>
+	  						<descriptors>
+	  							<descriptor>src/assembly/docs.xml</descriptor>
+	  						</descriptors>
+	  						<tarLongFileMode>gnu</tarLongFileMode>
+	  					</configuration>
+	  				</execution>
+	  			</executions>
+			</plugin>
+
+			<!-- Enable deployment of documentation artifacts when building for distribution only -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>site-deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Generates updated StyleGuide template.  Must be manually copied to source location for future use. -->
+			<plugin>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>styleguide-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>generate-template</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>generate-template</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+									
+		</plugins>	
+			
+	</build>
+  
+    <profiles>
+    
+		<!-- Profile to handle JCite-related processing -->    
+        <profile>
+            <id>jcite-processing</id>
+            <activation>
+            	<file>
+            	    <exists>${jciteCommandPath}</exists>
+            	</file>
+            </activation>
+            
+            <build> 
+                       
+                <plugins>
+                
+					<plugin>
+						<groupId>${project.groupId}</groupId>
+						<artifactId>styleguide-maven-plugin</artifactId>
+						<version>${project.version}</version>
+						<executions>
+							<!-- Process JCite tags in consolidated site content -->
+							<execution>
+								<id>process-site</id>
+								<phase>site</phase>
+								<configuration>
+									<outputPath>${docStagingDirectory}</outputPath>
+									<filenamePattern>${docStagingDirectory}/*.html</filenamePattern>
+									<includeTestSources>true</includeTestSources>
+									<includeResources>true</includeResources>
+									<extraSourcePaths>
+										<extraSourcePath>${basedir}/src/styleGuide/includes</extraSourcePath>
+										<extraSourcePath>${basedir}/src/styleGuide/template</extraSourcePath>
+									</extraSourcePaths>
+								</configuration>
+								<goals>
+									<goal>jcite</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+                </plugins>  
+                              
+            </build>
+            
+        </profile> 
+               
+    </profiles>	
+    
+</project>

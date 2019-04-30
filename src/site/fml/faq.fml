@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 Information Control Corporation
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+-->
+<faqs xmlns="http://maven.apache.org/FML/1.0.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/FML/1.0.1 http://maven.apache.org/xsd/fml-1.0.1.xsd"
+  title="Frequently Asked Questions"
+  toplink="true">
+
+    <part id="purpose">
+        <title>Using a style guide</title>
+        
+        <faq id="benefits">
+            <question>
+                What should a team expect to get from using a style guide?
+            </question>
+            <answer>
+                <p>The main purpose of using a style guide is to help establish consistency 
+                within the team.  This provides a number of benefits that can help the team
+                function more effectively:</p>
+                <ul>
+                    <li>It makes the team more efficient, since a particular problem need only
+                    be solved once.</li>
+                    <li>It allows new team members to get up to speed more quickly, since
+                    they can find solutions to numerous problems in one place.</li>
+                    <li>It helps to ensure that any member of the team can read and
+                    understand any piece of code, since they follow well-understood idioms.</li>
+                    <li>It can facilitate team communication by establishing a common
+                    way to talk about code.</li>
+                    <li>It can set the stage for effective code reviews by establishing the
+                    expectations that team members should follow.</li>
+                </ul>
+            </answer>
+        </faq>
+        
+        <faq id="codingStandards">
+            <question>
+                How is a style guide different than coding standards?
+            </question>
+            <answer>
+                <p>Coding standards generally address considerations of how to format source
+                code so that it can easily be read, understood and maintained by anyone that
+                follows the same standard.  As such, coding standards apply to all uses of a
+                particular language as opposed to any one specific project.</p>
+                <p>A style guide, on the other hand, is much more specific to a team and
+                the particular set of technologies that they are using.  It can be used to
+                illustrate repeatable patterns for solving common coding problems that are
+                likely to be encountered by the team.</p>
+            </answer>
+        </faq>
+
+        <faq id="includeCodingStandards">
+            <question>
+                Should the style guide be used to document coding standards?
+            </question>
+            <answer>
+                <p>While it would be possible to use the style guide to illustrate coding
+                standards, this is not a particularly effective approach.  Coding standards
+                are well-suited to enforcement via static analysis tools such as CheckStyle,
+                PMD or Sonar.  By including the StyleGuide plugin and plugins for these
+                tools together in the Maven build, the team will get the full benefit of 
+                using the right tool for the job.</p>
+            </answer>
+        </faq>
+        
+        <faq id="patterns">
+            <question>
+                Should a style guide be used to document patterns?
+            </question>
+            <answer>
+                <p>Due to its flexibility, the style guide could be used for this purpose.
+                But, as with coding standards, the style guide is intended to present more
+                specific solutions than a pattern generally would.  Where possible, the 
+                style guide should reference or link to patterns that are documented elsewhere.</p>
+            </answer>
+        </faq>
+        
+        <faq id="effort">
+        	<question>
+        		Won't a style guide be hard to create and maintain?
+        	</question>
+        	<answer>
+        		<p>As with all documentation for a software development project, keeping a
+        		style guide seems like "extra" work.  The StyleGuide plugin is designed to
+        		do much of the heavy lifting, but there are a number of guidelines that
+        		can help to ease the burden even further.</p>
+        		<ul>
+        		<li><b>Start early</b> - Since so much of what happens early in a software
+        		development project revolves around establishing common solutions that will
+        		be used	repeatedly throughout its lifetime, that is the perfect time to start
+        		compiling the style guide.  Don't wait until this information has become
+        		stale, or it will be much harder to identify what should be included.</li>
+        		<li><b>Stay current</b> - The best time to add something to the style guide
+        		is as soon as it is coded.  If you know that you will have to explain a
+        		new solution to the team, add it to the style guide right away.  Don't try
+        		to include all of the descriptive information that may eventually be required,
+        		but do mark new code styles using the StyleGuide annotations.  This
+        		reduces the amount of overhead involved in maintaining the style guide
+        		while still providing value to the team.</li>
+        		<li><b>Involve everyone</b> - The entire team should be responsible for
+        		maintaining the style guide.  Explain the use of the StyleGuide annotations
+        		to the team and make sure everyone is responsible to identify and mark their
+        		own code styles for inclusion in the style guide.</li>
+        		<li><b>Refine iteratively</b> - Since new code styles will be added to the
+        		style guide on an ongoing basis, mostly with a minimum of explanatory 
+        		information, you will need to occasionally update the guide's structure, 
+        		order and descriptive text to keep it readable.  The support the plugin 
+        		provides for a StyleGuide template and resource citations make it easy
+        		to do this in an iterative fashion.  By keeping things cleaned up with some
+        		regularity, no one ever has to invest a significant amount of effort to
+        		maintain the style guide.</li>
+        		</ul>
+        	</answer>
+        </faq>
+              
+    </part>
+
+	<part id="annotations">
+		<title>Using the StyleGuide annotations</title>
+		
+        <faq id="annotations">
+        	<question>
+        		Why does the StyleGuide plugin use annotations to define code styles?
+        	</question>
+        	<answer>
+        		<p>The basic premise behind the StyleGuide plugin is that the best place to
+        		find meaningful, up-to-date examples of code done the way the team wants
+        		is in the code, itself.  Similarly, the best way to define which code samples
+        		should be included in the style guide is in the code, as well.</p>
+        		<p>Annotations are specifically designed to provide metadata about the code
+        		within the code.  StyleGuide leverages this capability to make it possible
+        		to produce a centralized style guide without having to manually maintain any
+        		kind of centralized documentation (unless you choose to use a template).
+        		This makes it easier for the team to identify and mark useful code examples
+        		in the normal course of development without having to remember to update
+        		a separate central document.</p>
+        	</answer>
+        </faq>
+        
+        <faq id="sectionName">
+            <question>
+                Should the <i>@CodeStyle</i> annotation be used to provide a descriptive
+                name for the category and topic to which a style belongs?
+            </question>
+            <answer>
+                <p>While the annotation does provide <i>categoryName</i> and <i>topicName</i>
+                elements, it is generally not advisable to use these.  For much the same
+                reason that relational data is normalized, it is generally preferable to
+                define the section titles in the StyleGuide template.  These elements are
+                provided for users who wish to avoid the use of a template and keep all of
+                the information needed to generate the style guide in the code, itself.</p> 
+            </answer>
+        </faq>
+
+        <faq id="templateOverride">
+            <question>
+                What happens if the StyleGuide template and an annotation provide different
+                names for the category or topic?
+            </question>
+            <answer>
+                 <p>As long as the template provides a value for the name, it will take precedence
+                 over any value provided by an annotation.  If the template does not define
+                 a name, the name from the last annotation processed for that category or 
+                 topic will be used.  In this case, the value used will be non-deterministic
+                 unless all annotations referencing that section define the same name.</p>
+            </answer>
+        </faq>
+        
+        <faq id="annotationLocation">
+        	<question>
+        		Does it matter whether a code style annotation is applied to a class or
+        		a method?
+        	</question>
+        	<answer>
+        		<p>No, the output will be the same regardless of where the annotation appears.
+        		The key is that the annotation must exist in the class from which the code
+        		snippet is to be extracted.  The choice of where to put the annotation
+        		is up to the developer and is generally a matter of readability.</p>
+        	</answer>
+        </faq>
+        
+        <faq id="multipleSnippets">
+        	<question>
+        		Is it possible to combine multiple code snippets under a single topic?
+        	</question>
+        	<answer>
+        		<p>Yes, this can be done within a single class or across multiple classes.</p>
+        		<p>Within a single class, only one annotation is needed to define the topic.
+        		The comment marker for that topic can then be used to mark multiple independent
+        		sections of code.  The one JCite tag generated from the annotation will, when
+        		processed by JCite, result in a single entry in the style guide that includes
+        		all marked code snippets.</p>
+        		<p>For code snippets that exist across multiple classes, include individual
+        		code style annotations in each class with the same category/topic ID's.  The
+        		StyleGuide plugin will consolidate these together under that topic in the
+        		style guide.</p>
+        	</answer>
+        </faq>
+        
+        <faq id="citations">
+        	<question>
+        		What is the difference between the include and citations attributes?
+        	</question>
+        	<answer>
+        		<p>Both <i>include</i> and <i>citations</i> provide ways to associate additional
+        		explanatory text with a code snippet.  However, <i>citations</i> is far more
+        		flexible and is the preferred mechanism going forward; <i>include</i> has been
+        		deprecated and should not be used.</p>
+        		<p>Following is a brief description of the capabilities provided by each.</p>
+        		<p><i>include</i> is capable of referencing a single file, which is expected to contain
+        		HTML content.  This content is displayed immediately before the code snippet in the final
+        		output.</p>
+        		<p><i>citations</i>, on the other hand, can be used to reference multiple additional
+        		resources.  For each resource, it is possible to specify the type (e.g.Java, XML, HTML, text),
+        		location (before or after the snippet), delimiting comment marker for extracted segments and
+        		whether or not a label listing the resource name should be displayed.</p>
+        		<p>Both <i>include</i> and <i>citations</i> can also be applied to sections of the
+        		StyleGuide through the use of a StyleGuide template.</p>
+        	</answer>
+        </faq>
+        
+        <faq id="jciteFeatures">
+        	<question>
+        		Is it possible to use JCite features such as highlighting, omissions or
+        		plain formatting in the StyleGuide report?
+        	</question>
+        	<answer>
+        		<p>Highlighting and omissions can both be used by setting a custom <i>marker</i>
+        		element on a <i>@CodeStyle</i> annotation.  Within the custom comment marker,
+        		use the syntax for enabling highlighting or omissions and apply the 
+        		corresponding bracketing comments appropriately.</p>
+        		<p>There is currently no way to enable plain formatting for code samples
+        		defined using the <i>@CodeStyle</i> annotation.</p>
+        	</answer>
+        </faq>
+        
+        <faq id="runtime">
+        	<question>
+        		Will the use of the StyleGuide annotations affect my code at runtime?
+        	</question>
+        	<answer>
+        		<p>If you follow the <b>Usage</b> guidelines for setting up the dependencies
+        		needed to use the annotations, they will not have any impact on the packaging
+        		or execution of your code.  The <i>@CodeStyle</i> and related
+        		annotations are defined with source retention, meaning that they are stripped
+        		from the code during compilation.  Similarly, the required dependency on
+        		the <b>styleguide-core</b> project can be defined with <i>provided</i> scope, 
+        		ensuring that it will not be packaged with your code.</p>
+        	</answer>
+        </faq>
+        		
+	</part>
+	    
+    <part id="plugin">
+        <title>Using the StyleGuide plugin</title>
+        
+        <faq id="operation">
+        	<question>
+        		How does the StyleGuide plugin produce the style guide from the annotations?
+        	</question>
+        	<answer>
+        		<p>The plugin first performs a scan of all of the source (and potentially
+        		test) code in scope, based on the type of report being run, to find instances
+        		of the <i>@CodeStyle</i> and <i>@CodeStyles</i> annotations.  Based on the
+        		information contained in the annotations, it compiles an XML file that
+        		represents the rough contents of the style guide.  It then merges this XML
+        		file with a StyleGuide template file, if any, and transforms the combined
+        		content into HTML using an XSL stylesheet.</p>
+        		<p>The HTML fragment contains embedded JCite tags to reference code snippets
+        		from the annotated class files.  The plugin invokes JCite to extract the
+        		corresponding code snippets and writes the result to another HTML fragment.
+        		It then renders this content into a Maven report.</p>        		 
+        	</answer>
+        </faq>
+
+        <faq id="options">
+            <question>
+                Why are there several different ways to produce the StyleGuide report?
+            </question>
+            <answer>
+                <p>Since a style guide is meant to serve as a common source for coding
+                guidance for an entire project, it is most useful when it aggregates such
+                information from all of the modules within the project.  With this in mind,
+                the StyleGuide plugin is designed to provide maximum flexibility when used
+                on a multimodule Maven project.</p>
+                <p>If the project is consistently built from a common parent, the <i>aggregate</i>
+                report can be applied to that module to generate a report for the entire 
+                project.  If, on the other hand, the submodules are actually individual
+                projects that are only loosely related, it might be more appropriate to 
+                generate a separate style guide for each using the inheritable <i>styleguide</i>
+                report.  Finally, if all documentation is generated by a single module that
+                is not the parent, the <i>collate</i> goal can be combined with the <i>report</i>
+                report to create an aggregated style guide under that module.</p>
+            </answer>
+        </faq>
+        
+        <faq id="jciteInstall">
+        	<question>
+        		Why does the StyleGuide plugin require that the JCite executable be installed
+        		on the system performing the build?
+        	</question>
+        	<answer>
+        		<p>The current release of JCite is not defined as a Maven artifact.  Rather
+        		than creating a non-standard Maven bundle of the product, the StyleGuide
+        		plugin relies on the standard JCite installation.  If the author of JCite
+        		creates a Maven artifact in a future release, StyleGuide will be updated
+        		to use it as a dependency.</p>
+        	</answer>
+        </faq>
+        
+        <faq id="nonCode">
+        	<question>
+        		Can files other than code be referenced in the style guide?
+        	</question>
+        	<answer>
+        		<p>The <i>citations</i> attribute of the <i>@CodeStyle</i> annotation
+        		(and corresponding element in the StyleGuide template) can be used to
+        		reference both code and non-code (e.g. XML, HTML and text) resources
+        		to provide supporting content for a code snippet or StyleGuide section.</p>
+        		<p>Somewhat more obscurely, it is also possible to embed JCite tags in 
+        		HTML or text resources referenced through the <i>citations</i> element 
+        		of an annotation or the StyleGuide template.  By processing the style 
+        		guide HTML page through the <i>jcite</i> goal, those tags can generate 
+        		snippets from any code or non-code file within the scope of the build.  
+        		The <i>extraSourcePaths</i>	parameter can be used to configure the plugin 
+        		to scan non-code folders for referenced files.  This approach would
+        		provide the author more direct control over the specification of the
+        		JCite tags than could be obtained through the use of the annotations
+        		or StyleGuide template.</p>
+        	</answer>
+        </faq>
+        
+        <faq id="nonMaven">
+        	<question>
+        		Is it possible to generate a style guide without using Maven?
+        	</question>
+        	<answer>
+        		<p>The key functionality of the StyleGuide plugin (e.g. the code style
+        		annotations, support for annotation scanning, processing the StyleGuide
+        		schema, merging with the StyleGuide	template, and the XSL transformations
+        		to produce HTML with embedded JCite tags) is all contained within the 
+        		<b>styleguide-core</b> artifact.  This artifact is designed to be used in
+        		a standalone fashion, as its only dependency is the core Java library.
+        		See the API documentation for information on the capabilities provided
+        		by <b>styleguide-core</b>.</p>
+        		<p>The JCite executable can be run directly on the output produced from
+        		<b>styleguide-core</b> to generate a full style guide.  This can be done
+        		manually or through another build framework such as Ant or Gradle.</p>
+        	</answer>
+        </faq>
+                      
+    </part>
+      
+</faqs>

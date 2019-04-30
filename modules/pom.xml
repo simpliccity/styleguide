@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 Information Control Corporation
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.simpliccity.styleguide</groupId>
+		<artifactId>styleguide</artifactId>
+		<version>1.1.6-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+	<artifactId>modules</artifactId>
+	<packaging>pom</packaging>
+	<name>StyleGuide Code Modules</name>
+	<description>${displayTitle} Java modules</description>
+  
+	<properties>
+  		<!-- Placeholder properties.  These will be overridden either from specific profiles that are enabled or from the command line. -->
+  		<externalDirectory>${project.build.directory}/external</externalDirectory>
+	</properties>
+  
+	<modules>
+		<module>styleguide-core</module>
+		<module>styleguide-maven-plugin</module>
+		<module>styleguide-maven-util</module>
+	</modules>
+
+	<dependencies>
+	
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+		
+	</dependencies>
+	
+	<build>
+	
+	    <plugins>
+	    
+	      <!-- Create source bundle of project for use with centralized Javadoc report -->
+	      <plugin>
+	      	<groupId>org.apache.maven.plugins</groupId>
+	      	<artifactId>maven-source-plugin</artifactId>
+	      	<executions>
+	      		<execution>
+	      			<id>bundle-sources</id>
+	      			<phase>package</phase>
+	      			<goals>
+	      				<goal>jar-no-fork</goal>
+	      			</goals>
+	      		</execution>
+	      	</executions>
+	      </plugin>
+	 
+	    </plugins>
+	    
+	</build>
+ 
+	<profiles>
+	
+		<profile>
+			<!-- Profile to support automated integration testing -->
+			<id>int-test</id>
+			
+			<build>
+				<plugins>
+					
+					<!-- Execute integration tests -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<!-- Use same output directory as Surefire plugin to combine unit and integration tests into single report -->
+<!-- 							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory> -->
+							<argLine>${coverage.agent.argLine}</argLine>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<goals>
+									<goal>integration-test</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+			
+		</profile>
+
+		<profile>
+			<!-- Profile to generate code analysis metrics -->
+			<id>analysis</id>
+			
+			<build>
+			
+				<plugins>
+				
+					<!-- Use Jacoco for code coverage analysis -->
+					<plugin>
+		      			<groupId>org.jacoco</groupId>
+		      			<artifactId>jacoco-maven-plugin</artifactId>
+							<configuration>
+								<includes>
+									<include>${basePackagePath}/**</include>
+								</includes>
+								<destFile>${jacocoDirectory}/jacoco.exec</destFile>
+								<append>true</append>
+								<propertyName>coverage.agent.argLine</propertyName>
+							</configuration>
+							<executions>
+								<execution>
+									<id>jacoco-init</id>
+<!-- 									<phase>process-test-classes</phase> -->
+									<goals>
+										<goal>prepare-agent</goal>
+									</goals>
+								</execution>
+								<execution>
+									<id>jacoco-it-init</id>
+<!-- 									<phase>process-test-classes</phase> -->
+									<goals>
+										<goal>prepare-agent-integration</goal>
+									</goals>
+								</execution>
+								<execution>
+									<id>jacoco-report</id>
+									<phase>verify</phase>
+									<goals>
+										<goal>report</goal>
+									</goals>
+								</execution>
+							</executions>
+						</plugin>
+						
+						<!-- Configure Surefire for Jacoco code coverage -->
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<configuration>
+								<argLine>${coverage.agent.argLine}</argLine>
+							</configuration>
+						</plugin>
+	      
+				</plugins>
+				
+			</build>
+			
+		</profile>
+
+		<profile>
+			<!-- Configurations for generating Sonar metrics -->
+			<id>sonar</id>
+		
+			<build>
+			
+				<plugins>
+				
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<properties>
+								<property>
+									<name>listener</name>
+									<value>org.sonar.java.jacoco.JUnitListener</value>
+								</property>
+							</properties>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<properties>
+								<property>
+									<name>listener</name>
+									<value>org.sonar.java.jacoco.JUnitListener</value>
+								</property>
+							</properties>
+						</configuration>
+					</plugin>
+					
+				</plugins>
+				
+			</build>
+			
+			<dependencies>
+			
+				<dependency>
+					<groupId>org.codehaus.sonar-plugins.java</groupId>
+					<artifactId>sonar-jacoco-listeners</artifactId>
+				</dependency>
+				
+			</dependencies>
+			
+		</profile>
+	
+		<profile>
+			<!-- Configurations for generating quality reports without Sonar -->
+			<id>no-sonar</id>
+			
+			<reporting>
+			
+				<plugins>
+				
+					<!-- Generate Surefire results report -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-report-plugin</artifactId>
+						<version>2.19</version>
+					</plugin>
+	
+					<!-- Generate CheckStyle report -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<version>2.17</version>
+					</plugin>
+	
+					<!-- Generate PMD report -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-pmd-plugin</artifactId>
+						<version>3.5</version>
+					</plugin>
+				  
+				</plugins>
+				
+			</reporting>
+			
+		</profile>
+		
+		<profile>
+			<!-- Configurations for a full distribution build -->
+			<id>dist</id>
+			
+			<build>
+			
+				<plugins>
+							
+					<!-- Allow documentation project to compile and deploy the site documentation -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-site-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>default-site</id>
+								<goals>
+									<goal>site</goal>
+								</goals>
+								<configuration>
+									<generateReports>true</generateReports>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>		
+					
+				</plugins>
+				
+			</build>
+		
+			<reporting>
+			
+				<plugins>
+
+					<!-- Generate standard reports -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-project-info-reports-plugin</artifactId>
+		      	  		<version>2.8.1</version>
+						<reportSets>
+							<reportSet>
+								<reports>
+									<report>dependencies</report>
+									<report>dependency-convergence</report>
+									<report>dependency-management</report>
+									<report>index</report>
+									<report>license</report>
+									<report>plugin-management</report>
+									<report>plugins</report>
+									<report>summary</report>
+								</reports>
+							</reportSet>
+						</reportSets>
+					</plugin>
+					
+				</plugins>
+				
+			</reporting>
+			
+		</profile>
+						
+	</profiles>
+   
+</project>

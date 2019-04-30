@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright 2013 Information Control Corporation
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ 
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  	<modelVersion>4.0.0</modelVersion>
+  	<parent>
+  		<groupId>org.simpliccity</groupId>
+  		<artifactId>simpliccity-parent</artifactId>
+  		<version>10</version>
+  	</parent>
+  	<groupId>org.simpliccity.styleguide</groupId>
+  	<artifactId>styleguide</artifactId>
+  	<version>1.1.6-SNAPSHOT</version>
+  	<packaging>pom</packaging>
+  	<name>Simpliccity StyleGuide Plugin</name>
+  	<description>${displayTitle} parent project</description>
+  	<inceptionYear>2013</inceptionYear>
+
+  	<properties>
+  		<simpliccity.licenseVersion>2.0.0</simpliccity.licenseVersion>
+  		<mavenVersion>3.0.4</mavenVersion>
+		<plexusVersion>1.5.5</plexusVersion>
+		<plexusCompilerVersion>2.1</plexusCompilerVersion>
+		
+  		<displayTitle>Simpliccity StyleGuide Plugin</displayTitle>
+   		<javaDocClassifier>javadoc</javaDocClassifier>
+  		<javaDocPackage>zip</javaDocPackage>
+  		<basePackagePath>org/simpliccity/styleguide</basePackagePath>
+  		<mavenCoreJavadocUrl>http://maven.apache.org/ref/${mavenVersion}/maven-core/apidocs/</mavenCoreJavadocUrl>
+  		<mavenPluginJavadocUrl>http://maven.apache.org/ref/${mavenVersion}/maven-plugin-api/apidocs/</mavenPluginJavadocUrl>
+  		<mavenPluginAnnotationJavadocUrl>http://maven.apache.org/plugin-tools/maven-plugin-annotations/apidocs/</mavenPluginAnnotationJavadocUrl>
+  		<mavenReportingApiJavadocUrl>http://maven.apache.org/shared/maven-reporting-api/apidocs/</mavenReportingApiJavadocUrl>
+  		<mavenReportingImplJavadocUrl>http://maven.apache.org/shared/maven-reporting-impl/apidocs/</mavenReportingImplJavadocUrl>
+  		
+  		<!-- Workarounds for future POM elements -->
+  		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  		
+	</properties>
+  
+	<modules>
+		<module>modules</module>
+	</modules>
+
+	<distributionManagement>
+		<site>
+			<id>icc.simpliccity.site</id>
+			<url>dav:http://nexus.icc.local/nexus/content/sites/icc.simpliccity.site/${project.groupId}/${project.version}/</url>
+		</site>
+	</distributionManagement>
+ 
+ 	<dependencyManagement>
+ 	
+ 		<dependencies>
+ 		
+			<!-- Test -->
+			
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+				<scope>test</scope>
+				<optional>true</optional>
+			</dependency>
+
+			<dependency>
+				<groupId>org.codehaus.sonar-plugins.java</groupId>
+				<artifactId>sonar-jacoco-listeners</artifactId>
+				<version>3.2</version>
+				<scope>test</scope>
+				<optional>true</optional>
+			</dependency>
+
+ 		</dependencies>
+			
+ 	</dependencyManagement>
+ 	 
+	<build>
+	
+		<pluginManagement>
+		
+			<plugins>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.6.1</version>
+		  			<configuration>
+	  					<source>1.7</source>
+	  					<target>1.7</target>
+	  				</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+<!-- 					<configuration> -->
+<!-- 						<deployAtEnd>true</deployAtEnd> -->
+<!-- 					</configuration> -->
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-remote-resources-plugin</artifactId>
+					<version>1.5</version>
+				</plugin>
+			
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.6</version>
+ 					<dependencies>
+ 		            	<dependency>
+ 			              	<groupId>org.apache.maven.wagon</groupId>
+ 			              	<artifactId>wagon-webdav-jackrabbit</artifactId>
+ 			              	<version>2.10</version>
+ 		            	</dependency>
+           			</dependencies>					 
+				</plugin>
+				
+		  		<plugin>
+		  			<groupId>org.apache.maven.plugins</groupId>
+		  			<artifactId>maven-javadoc-plugin</artifactId>
+		  			<version>2.10.4</version>
+		  		</plugin>
+		  		
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+		  			<version>3.0.0</version>
+		  		</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+		  			<version>3.0.1</version>
+		  		</plugin>
+		  		
+		      	<plugin>
+	   	     		<groupId>org.apache.maven.plugins</groupId>
+	      	  		<artifactId>maven-surefire-plugin</artifactId>
+	      	  		<version>2.19.1</version>
+	      		</plugin>
+
+		      	<plugin>
+	   	     		<groupId>org.apache.maven.plugins</groupId>
+	      	  		<artifactId>maven-failsafe-plugin</artifactId>
+	      	  		<version>2.19.1</version>
+	      		</plugin>
+
+	      		<plugin>
+	      			<groupId>org.jacoco</groupId>
+	      			<artifactId>jacoco-maven-plugin</artifactId>
+	      			<version>0.7.5.201505241946</version>
+	      		</plugin>
+	      		
+	      		<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.5</version>
+	      		</plugin>
+	      		
+	      		<plugin>
+					<groupId>org.codehaus.plexus</groupId>
+					<artifactId>plexus-component-metadata</artifactId>
+					<version>${plexusVersion}</version>
+	      		</plugin>
+	      		
+	      		<plugin>
+	        		<groupId>org.codehaus.mojo</groupId>
+	        		<artifactId>jaxb2-maven-plugin</artifactId>
+	        		<version>1.6</version>
+	      		</plugin>
+	      		
+				<plugin>
+					<groupId>com.coderplus.maven.plugins</groupId>
+					<artifactId>copy-rename-maven-plugin</artifactId>
+					<version>1.0</version>
+				</plugin>
+				
+	      		<plugin>
+	      			<groupId>${project.groupId}</groupId>
+	      			<artifactId>styleguide-maven-plugin</artifactId>
+	      			<version>${project.version}</version>
+	      		</plugin>
+
+        		<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        		<plugin>
+        			<groupId>org.eclipse.m2e</groupId>
+        			<artifactId>lifecycle-mapping</artifactId>
+        			<version>1.0.0</version>
+        			<configuration>
+        				<lifecycleMappingMetadata>
+        					<pluginExecutions>
+        						<pluginExecution>
+        							<pluginExecutionFilter>
+        								<groupId>org.apache.maven.plugins</groupId>
+        								<artifactId>maven-remote-resources-plugin</artifactId>
+        								<versionRange>[1.5,)</versionRange>
+        								<goals>
+        									<goal>process</goal>
+        								</goals>
+        							</pluginExecutionFilter>
+        							<action>
+        								<ignore></ignore>
+        							</action>
+        						</pluginExecution>
+        					</pluginExecutions>
+        				</lifecycleMappingMetadata>
+        			</configuration>
+        		</plugin>
+
+			</plugins>
+			
+		</pluginManagement>
+		
+		<plugins>
+		
+			<!-- Retrieve license files as resources from parent -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-remote-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>process</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includeProjectProperties>true</includeProjectProperties>
+					<resourceBundles>
+						<resourceBundle>
+							org.simpliccity:simpliccity-license:${simpliccity.licenseVersion}
+						</resourceBundle>
+					</resourceBundles>
+				</configuration>
+			</plugin>
+			
+		</plugins>
+		
+	</build>
+ 
+	<profiles>
+	
+		<profile>
+			<!-- Configurations for a full distribution build -->
+			<id>dist</id>
+			
+			<modules>
+				<module>documentation</module>
+				<module>distribution</module>
+			</modules>
+			
+			<build>
+			
+				<plugins>
+					
+					<plugin>
+						<groupId>com.coderplus.maven.plugins</groupId>
+						<artifactId>copy-rename-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>copy-poms</id>
+								<phase>pre-site</phase>
+								<goals>
+									<goal>copy</goal>
+								</goals>
+								<configuration>
+									<sourceFile>${project.basedir}/pom.xml</sourceFile>
+									<destinationFile>${pomStagingDirectory}/${project.artifactId}.pom</destinationFile>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<!-- Allow documentation project to compile and deploy the site documentation -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-site-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>default-site</id>
+								<goals>
+									<goal>site</goal>
+								</goals>
+							</execution>
+						
+				 	  		<!-- Stage site content for packaging and deployment by documentation project -->
+							<execution>
+								<id>stage</id>
+								<phase>post-site</phase>
+								<goals>
+									<goal>stage</goal>
+								</goals>
+								<configuration>
+									<stagingDirectory>${docStagingDirectory}</stagingDirectory>
+ 								</configuration>
+ 							</execution> 
+		 					<execution>
+								<id>default-deploy</id>
+								<goals>
+									<goal>deploy</goal>
+								</goals>
+								<configuration>
+									<skipDeploy>true</skipDeploy>
+								</configuration>
+							</execution>
+ 						</executions> 
+ 					</plugin>		 
+
+					<!-- Create consolidated source release ZIP for entire project -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-assembly-plugin</artifactId>			  			
+			  			<executions>
+			  				<execution>
+			  					<id>source-release</id>
+			  					<phase>package</phase>
+			  					<goals>
+			  						<goal>single</goal>
+			  					</goals>
+			  					<configuration>
+			  						<descriptorRefs>
+			  							<descriptorRef>project</descriptorRef>
+			  						</descriptorRefs>
+			  						<tarLongFileMode>gnu</tarLongFileMode>
+			  						<runOnlyAtExecutionRoot>true</runOnlyAtExecutionRoot>
+			  					</configuration>
+			  				</execution>
+			  			</executions>
+					</plugin>
+				
+				</plugins>
+				
+			</build>
+		
+			<reporting>
+				<excludeDefaults>true</excludeDefaults>
+			</reporting>
+			
+		</profile>
+		
+		<profile>
+			<!-- Configurations for generating Sonar metrics -->
+			<id>sonar</id>
+			
+			<properties>
+		  		<!-- Sonar configurations -->
+				<sonar.verbose>true</sonar.verbose>
+				<sonar.skippedModules>distribution,documentation</sonar.skippedModules>
+				<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
+				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+				<sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
+				<sonar.jacoco.reportPath>${jacocoDirectory}/jacoco.exec</sonar.jacoco.reportPath>
+				<sonar.exclusions>**/HelpMojo.java</sonar.exclusions>
+			</properties>
+			
+			<build>
+			
+				<pluginManagement>
+				
+					<plugins>
+					
+						<!-- Perform Sonar analysis -->
+				      	<plugin>
+			   	     		<groupId>org.sonarsource.scanner.maven</groupId>
+			      	  		<artifactId>sonar-maven-plugin</artifactId>
+			      	  		<version>3.2</version>
+			      		</plugin> 
+			      		 		
+					</plugins>
+					
+				</pluginManagement>
+				
+			</build>
+			
+			<reporting>
+			
+				<plugins>
+					
+					<!-- Generate Sonar report -->
+			  		<plugin>
+			  			<groupId>org.codehaus.sonar-plugins</groupId>
+			  			<artifactId>maven-report</artifactId>
+			  			<version>0.1</version>
+			  		</plugin>
+			  		
+				</plugins>
+				
+			</reporting>
+			
+		</profile>
+
+		<!-- Profile to handle JCite-related processing -->    
+        <profile>
+            <id>jcite-processing</id>
+            <activation>
+            	<file>
+            	    <exists>${jciteCommandPath}</exists>
+            	</file>
+            </activation>
+            
+			<reporting>
+			
+				<excludeDefaults>true</excludeDefaults>
+				
+				<plugins>
+
+	 		        <!-- Render StyleGuide report for entire project -->
+					<plugin>
+						<groupId>org.simpliccity.styleguide</groupId>
+						<artifactId>styleguide-maven-plugin</artifactId>
+						<version>${styleGuideVersion}</version>
+						<configuration>
+							<reportLabel>${displayTitle}</reportLabel>
+							<failOnError>false</failOnError>
+						</configuration>
+						<reportSets>
+							<reportSet>
+								<reports>
+									<report>aggregate</report>
+								</reports>
+							</reportSet>
+						</reportSets>
+					</plugin>	
+			
+				</plugins>
+				
+			</reporting>
+			            
+        </profile> 
+
+	</profiles>	
+
+</project>

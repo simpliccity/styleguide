@@ -1,0 +1,91 @@
+ ------
+ Generating a style guide report for a single project
+ ------
+ Kevin Fox
+ ------
+ 2013-02-21
+ ------
+
+ ~~    Copyright 2013 Information Control Corporation
+ ~~
+ ~~ Licensed under the Apache License, Version 2.0 (the "License");
+ ~~ you may not use this file except in compliance with the License.
+ ~~ You may obtain a copy of the License at
+ ~~
+ ~~     http://www.apache.org/licenses/LICENSE-2.0
+ ~~
+ ~~ Unless required by applicable law or agreed to in writing, software
+ ~~ distributed under the License is distributed on an "AS IS" BASIS,
+ ~~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ ~~ See the License for the specific language governing permissions and
+ ~~ limitations under the License.
+
+ ~~ NOTE: For help with the syntax of this file, see:
+ ~~ http://maven.apache.org/doxia/references/apt-format.html
+
+Generating a style guide report for a single project
+
+  For projects consisting of a single module, the 
+  {{{../modules/styleguide-maven-plugin/styleguide-mojo.html}styleguide}} and
+  {{{../modules/styleguide-maven-plugin/aggregate-mojo.html}aggregate}} reports are
+  equivalent.  However, for a multi-module project, their behavior will be very different.
+  
+  The {{{../modules/styleguide-maven-plugin/aggregate-mojo.html}aggregate}} report scans the
+  source code from all code modules (i.e. those not having type <<<pom>>>) in the project
+  for instances of the <<<@CodeStyle>>> and <<<@CodeStyles>>> annotations.  The results
+  are collected into a single report for the entire project.  The 
+  {{{../modules/styleguide-maven-plugin/aggregate-mojo.html}aggregate}} report can only be
+  run at the execution root of the build.
+  
+  On the other hand, the {{{../modules/styleguide-maven-plugin/styleguide-mojo.html}styleguide}}
+  report will run for any module and will produce a report based solely on the source code
+  contained in that module.  As a result, its configuration can be effectively inherited
+  from a parent POM.
+  
+  In order for the style guide to be truly comprehensive, the 
+  {{{../modules/styleguide-maven-plugin/aggregate-mojo.html}aggregate}} report should
+  generally be used for a multi-module project.  However, in a situation such as a set
+  of loosely-related projects grouped together in a common build, it may be appropriate
+  to generate a separate style guide for each using the
+  {{{../modules/styleguide-maven-plugin/styleguide-mojo.html}styleguide}} report.
+  
+* Generating an individual style guide
+
+  The {{{../modules/styleguide-maven-plugin/styleguide-mojo.html}styleguide}} report 
+  can be enabled using the following reporting entry:
+  
++---
+<reporting>
+    ...
+    <plugins>
+        ...
+        <plugin>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>styleguide-maven-plugin</artifactId>
+            <version>${project.version}</version>
+            <reportSets>
+                <reportSet>
+                    <id>styleguide</id>
+                    <reports>
+                        <report>styleguide</report>
+                    </reports>
+                </reportSet> 
+            </reportSets>
+        </plugin>
+        ...
+    </plugins>
+    ...
+</reporting>
++---
+  
+* Specifying the location of included HTML fragments
+ 
+  If individual <<<@CodeStyle>>> annotations or the StyleGuide template reference included
+  HTML fragments to provide explanatory text, those fragments must appear in the
+  {{{../modules/styleguide-maven-plugin/styleguide-mojo.html#includesBasePath}includesBasePath}}
+  specified for the plugin.  If the 
+  {{{../modules/styleguide-maven-plugin/styleguide-mojo.html}styleguide}} report configuration
+  will be inherited, be sure either that the specified project-relative path exists and has
+  the necessary HTML fragments for each child module or that an absolute path pointing to a
+  location containing all necessary fragments is used.
+  
