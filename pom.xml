@@ -62,8 +62,8 @@
 			<id>azure-devops</id>
 			<repositories>
 				<repository>
-				<id>dev-azure-com-simpliccity-simpliccity</id>
-				<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Simpliccity/maven/v1</url>
+				<id>dev-azure-com-simpliccity-maven</id>
+				<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Maven/maven/v1</url>
 				<releases>
 					<enabled>true</enabled>
 				</releases>
