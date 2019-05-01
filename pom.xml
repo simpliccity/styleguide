@@ -57,24 +57,6 @@
 		<module>modules</module>
 	</modules>
 
-	<profiles>
-		<profile>
-			<id>azure-devops</id>
-			<repositories>
-				<repository>
-				<id>dev-azure-com-simpliccity-maven</id>
-				<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Maven/maven/v1</url>
-				<releases>
-					<enabled>true</enabled>
-				</releases>
-				<snapshots>
-					<enabled>true</enabled>
-				</snapshots>
-				</repository>	
-			</repositories>
-		</profile>
-	</profiles>
-
 	<distributionManagement>
 		<site>
 			<id>icc.simpliccity.site</id>
@@ -470,6 +452,22 @@
 			</reporting>
 			            
         </profile> 
+
+		<profile>
+			<id>azure-devops</id>
+			<repositories>
+				<repository>
+				<id>dev-azure-com-simpliccity-maven</id>
+				<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Maven/maven/v1</url>
+				<releases>
+					<enabled>true</enabled>
+				</releases>
+				<snapshots>
+					<enabled>true</enabled>
+				</snapshots>
+				</repository>	
+			</repositories>
+		</profile>
 
 	</profiles>	
 
