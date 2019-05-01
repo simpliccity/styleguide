@@ -57,7 +57,7 @@
 		<module>modules</module>
 	</modules>
 
-	<reposioties>
+	<repositories>
 		<repository>
 		<id>dev-azure-com-simpliccity-simpliccity</id>
 		<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Simpliccity/maven/v1</url>
@@ -69,7 +69,7 @@
 		</snapshots>
 		</repository>	
 	</repositories>
-	
+
 	<distributionManagement>
 		<repository>
 		<id>dev-azure-com-simpliccity-simpliccity</id>
