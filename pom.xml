@@ -57,31 +57,25 @@
 		<module>modules</module>
 	</modules>
 
-	<repositories>
-		<repository>
-		<id>dev-azure-com-simpliccity-simpliccity</id>
-		<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Simpliccity/maven/v1</url>
-		<releases>
-			<enabled>true</enabled>
-		</releases>
-		<snapshots>
-			<enabled>true</enabled>
-		</snapshots>
-		</repository>	
-	</repositories>
+	<profiles>
+		<profile>
+			<id>azure-devops</id>
+			<repositories>
+				<repository>
+				<id>dev-azure-com-simpliccity-simpliccity</id>
+				<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Simpliccity/maven/v1</url>
+				<releases>
+					<enabled>true</enabled>
+				</releases>
+				<snapshots>
+					<enabled>true</enabled>
+				</snapshots>
+				</repository>	
+			</repositories>
+		</profile>
+	</profiles>
 
 	<distributionManagement>
-		<repository>
-		<id>dev-azure-com-simpliccity-simpliccity</id>
-		<url>https://pkgs.dev.azure.com/Simpliccity/_packaging/Simpliccity/maven/v1</url>
-		<releases>
-			<enabled>true</enabled>
-		</releases>
-		<snapshots>
-			<enabled>true</enabled>
-		</snapshots>
-		</repository>	
-
 		<site>
 			<id>icc.simpliccity.site</id>
 			<url>dav:http://nexus.icc.local/nexus/content/sites/icc.simpliccity.site/${project.groupId}/${project.version}/</url>
