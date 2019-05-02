@@ -456,52 +456,6 @@
 		<profile>
 			<id>azure-devops</id>
 
-			<properties>
-		  		<!-- Sonar configurations -->
-<!--				<sonar.verbose>true</sonar.verbose>
-				<sonar.skippedModules>distribution,documentation</sonar.skippedModules>
-				<sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
-				<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-				<sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath> -->
-				<!--<sonar.jacoco.reportPath>${jacocoDirectory}/jacoco.exec</sonar.jacoco.reportPath>-->
-				<sonar.exclusions>**/HelpMojo.java</sonar.exclusions>
-				
-			</properties>
-			
-			<build>
-			
-				<pluginManagement>
-				
-					<plugins>
-					
-						<!-- Perform Sonar analysis -->
-				      	<plugin>
-			   	     		<groupId>org.sonarsource.scanner.maven</groupId>
-			      	  		<artifactId>sonar-maven-plugin</artifactId>
-			      	  		<version>3.2</version>
-			      		</plugin> 
-			      		 		
-					</plugins>
-					
-				</pluginManagement>
-				
-			</build>
-			
-			<reporting>
-			
-				<plugins>
-					
-					<!-- Generate Sonar report -->
-			  		<plugin>
-			  			<groupId>org.codehaus.sonar-plugins</groupId>
-			  			<artifactId>maven-report</artifactId>
-			  			<version>0.1</version>
-			  		</plugin>
-			  		
-				</plugins>
-				
-			</reporting>
-
 			<repositories>
 				<repository>
 				<id>dev-azure-com-simpliccity-maven</id>
